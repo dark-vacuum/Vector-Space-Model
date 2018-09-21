@@ -7,8 +7,8 @@ class QueryDictionary:
     Attributes
     ----------
     querys : dict()
-        A dictionary of querys, where the key is the number of the 
-        query and the values are dictionarys containing the words 
+        A dictionary of querys, where the key is the number of the
+        query and the values are dictionarys containing the words
         of the query and its incidences.
     total_querys : int
         The total numbers of querys.
@@ -16,7 +16,7 @@ class QueryDictionary:
     Methods
     -------
     insertQuery(query_num: int)
-        Inserts the query in the dicctionary if the query doesn't 
+        Inserts the query in the dicctionary if the query doesn't
         exists.
     insertWord(query_num: int, word: str)
         Inserts a word or adds an incidence.
@@ -25,7 +25,7 @@ class QueryDictionary:
     def __init__(self):
         self.querys = {}
         self.total_querys = 0
-    
+
     def insertQuery(self, query_num:  int):
         """
         Checks if the query exist in the dictionary, if not exists is
@@ -41,7 +41,7 @@ class QueryDictionary:
         if not already_exists:
             self.querys[query_num] = {}
             self.total_querys += 1
-    
+
     def insertWord(self, query_num: int, word: str):
         """
         Checks if the word exist in the query, if not exists is
@@ -52,13 +52,17 @@ class QueryDictionary:
         query_num : int
             The number of the query to check.
         """
-        
+
         already_exists = word in self.querys[query_num]
         if already_exists:
             self.querys[query_num][word] += 1
         else:
             self.querys[query_num][word] = 1
 
+
+    def printDictionary(self):
+        for i in self.querys:
+            print(f"{i}--{self.querys[i]}")
 
 
 class Word:
@@ -70,8 +74,8 @@ class Word:
     Attributes
     ----------
     docs : dict()
-        A dictionary of querys, where the key is the number of the 
-        query and the values are dictionarys containing the words 
+        A dictionary of querys, where the key is the number of the
+        query and the values are dictionarys containing the words
         of the query and its incidences.
     value : float
         value of the word correspondig to log(N/n), where N is the
@@ -89,10 +93,10 @@ class Word:
 
     def __init__(self):
         self.docs = {}
-        self.value = 0
+        self.idf = 0
         self.length_docs = 0
 
-    
+
     def insertDoc(self, doc_num: int):
         """
         Checks if the document exist in the dictionary, if not exists
@@ -123,8 +127,8 @@ class WordsDictionary:
     Attributes
     ----------
     words : dict()
-        A dictionary of querys, where the key is the number of the 
-        query and the values are dictionarys containing the words 
+        A dictionary of querys, where the key is the number of the
+        query and the values are dictionarys containing the words
         of the query and its incidences.
     total_documents : int
         The total numbers of querys.
@@ -134,7 +138,7 @@ class WordsDictionary:
     Methods
     -------
     createIfNotExists(word: str, doc_num: int)
-        Inserts the word in the dicctionary if the word doesn't 
+        Inserts the word in the dicctionary if the word doesn't
         exists and inserts the document where it appears.
     """
 
@@ -142,8 +146,8 @@ class WordsDictionary:
         self.words = {}
         self.total_documents = 0
         self.total_words = 0
-    
-    
+
+
     def createIfNotExists(self, word: str, doc_num: int):
         """
         Checks if the word exist in the dictionary, if not exists
@@ -154,11 +158,14 @@ class WordsDictionary:
         doc_num : int
             The number of the document to check.
         """
-        
+
         already_exists = word in self.words
 
         if not already_exists:
             self.words[word] = Word()
             self.total_words += 1
         self.words[word].insertDoc(doc_num)
-            
+
+    def printDictionary(self):
+            for i in self.words:
+                print(f"{i}--{self.words[i].docs}")

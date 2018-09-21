@@ -5,7 +5,6 @@ from functools import reduce
     Equipo:
         Luis Alberto Flores Sanchez
         Luis Antonio Vazquez Garcia
-    .
 """
 
 
@@ -25,7 +24,7 @@ def replace(token: str) -> str:
     ----------
     token : str
         The word which is going to be cleanned.
-    
+
     Returns
     -------
     token : str
@@ -39,12 +38,12 @@ def replace(token: str) -> str:
     except ValueError:
         # Use of the function reduce to apply the replace to each symbol
         token = reduce(lambda x, y : x.replace(y, ""), symbols_toRemove, token)
-    
+
     return token
 
 
 """
-Funcion que lee un archivo, y regresa todas las 
+Funcion que lee un archivo, y regresa todas las
 palabras que hay en el documento.
 """
 def read_CranfieldDocs(file: str, words_Dict: WordsDictionary) -> WordsDictionary:
@@ -63,18 +62,18 @@ def read_CranfieldDocs(file: str, words_Dict: WordsDictionary) -> WordsDictionar
     Parameters
     ----------
     file : str
-        The path or the name of the documents of the Cranfield 
+        The path or the name of the documents of the Cranfield
         Collection.
     words_Dict : WordsDictionary
         The dictionary where the words will be stored.
-    
+
     Returns
     -------
-    
+
     """
     indicators = {".I", ".T", ".A", ".B", ".W"}
     indicators_toAvoid = {".T", ".A", ".B"}
-    
+
     # Lectura del archivo linea por linea.
     with open(file) as document:
         avoid_line = False
@@ -83,7 +82,7 @@ def read_CranfieldDocs(file: str, words_Dict: WordsDictionary) -> WordsDictionar
             arr_line = line.split()
             if arr_line[0] in indicators:
                 if arr_line[0] == ".I":
-                    current_doc = int(arr_line[1]) 
+                    current_doc = int(arr_line[1])
                     words_Dict.total_documents += 1
                 avoid_line = True if arr_line[0] in indicators_toAvoid else False
                 continue
@@ -96,7 +95,7 @@ def read_CranfieldDocs(file: str, words_Dict: WordsDictionary) -> WordsDictionar
 
 def read_CranfieldQuerys(file: str, querys_Dict: QueryDictionary) -> QueryDictionary:
     indicators = {".I", ".W"}
-    
+
     # Lectura del archivo linea por linea.
     with open(file) as document:
         current_query = 0
@@ -104,7 +103,7 @@ def read_CranfieldQuerys(file: str, querys_Dict: QueryDictionary) -> QueryDictio
             arr_line = line.split()
             if arr_line[0] in indicators:
                 if arr_line[0] == ".I":
-                    current_query = int(arr_line[1]) 
+                    current_query = int(arr_line[1])
                     querys_Dict.total_querys += 1
                     querys_Dict.insertQuery(current_query)
                 continue
@@ -122,8 +121,9 @@ def main():
     words_Dict = WordsDictionary()
     querys_Dict = QueryDictionary()
     words_Dict = read_CranfieldDocs(cranfield_docs, words_Dict)
+    words_Dict.printDictionary()
     querys_Dict = read_CranfieldQuerys(cranfield_querys, querys_Dict)
-    querys_Dict.printQuerys()
+    querys_Dict.printDictionary()
 
 
 
