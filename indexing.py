@@ -93,7 +93,7 @@ def read_CranfieldDocs(file: str, words_Dict: WordsDictionary) -> WordsDictionar
                 words_Dict.createIfNotExists(word, current_doc)
     return words_Dict
 
-def read_CranfieldQuerys(file: str, querys_Dict: QueryDictionary) -> QueryDictionary:
+def read_CranfieldQueries(file: str, queries_Dict: QueryDictionary) -> QueryDictionary:
     indicators = {".I", ".W"}
 
     # Lectura del archivo linea por linea.
@@ -104,26 +104,26 @@ def read_CranfieldQuerys(file: str, querys_Dict: QueryDictionary) -> QueryDictio
             if arr_line[0] in indicators:
                 if arr_line[0] == ".I":
                     current_query = int(arr_line[1])
-                    querys_Dict.total_querys += 1
-                    querys_Dict.insertQuery(current_query)
+                    queries_Dict.total_queries += 1
+                    queries_Dict.insertQuery(current_query)
                 continue
             arr_line = list(filter(lambda x : x != "", map(lambda x : replace(x), arr_line)))
             for word in arr_line:
-                querys_Dict.insertWord(current_query, word)
-    return querys_Dict
+                queries_Dict.insertWord(current_query, word)
+    return queries_Dict
 
 
 
 def main():
     # Colocar aqui los documentos que se quieran leer para crear el indice
     cranfield_docs = "cran.all.1400"
-    cranfield_querys = "cran.qry"
+    cranfield_queries = "cran.qry"
     words_Dict = WordsDictionary()
-    querys_Dict = QueryDictionary()
+    queries_Dict = QueryDictionary()
     words_Dict = read_CranfieldDocs(cranfield_docs, words_Dict)
     words_Dict.printDictionary()
-    querys_Dict = read_CranfieldQuerys(cranfield_querys, querys_Dict)
-    querys_Dict.printDictionary()
+    queries_Dict = read_CranfieldQueries(cranfield_queries, queries_Dict)
+    queries_Dict.printDictionary()
 
 
 

@@ -1,18 +1,18 @@
 from math import log10
 class QueryDictionary:
     """
-    A class used to represent a dictionary of querys.
+    A class used to represent a dictionary of queries.
 
     ...
 
     Attributes
     ----------
-    querys : {int : {str : int}}
-        A dictionary of querys, where the key is the number of the
+    queries : {int : {str : int}}
+        A dictionary of queries, where the key is the number of the
         query and the values are dictionaries containing the words
         of the query and its incidences.
-    total_querys : int
-        The total numbers of querys.
+    total_queries : int
+        The total numbers of queries.
 
     Methods
     -------
@@ -24,8 +24,8 @@ class QueryDictionary:
     """
 
     def __init__(self):
-        self.querys = {}
-        self.total_querys = 0
+        self.queries = {}
+        self.total_queries = 0
 
     def insertQuery(self, query_num:  int):
         """
@@ -38,10 +38,10 @@ class QueryDictionary:
             The number of the query to check.
         """
 
-        already_exists = query_num in self.querys
+        already_exists = query_num in self.queries
         if not already_exists:
-            self.querys[query_num] = {}
-            self.total_querys += 1
+            self.queries[query_num] = {}
+            self.total_queries += 1
 
     def insertWord(self, query_num: int, word: str):
         """
@@ -54,16 +54,16 @@ class QueryDictionary:
             The number of the query to check.
         """
 
-        already_exists = word in self.querys[query_num]
+        already_exists = word in self.queries[query_num]
         if already_exists:
-            self.querys[query_num][word] += 1
+            self.queries[query_num][word] += 1
         else:
-            self.querys[query_num][word] = 1
+            self.queries[query_num][word] = 1
 
 
     def printDictionary(self):
-        for i in self.querys:
-            print(f"{i}--{self.querys[i]}")
+        for i in self.queries:
+            print(f"{i}--{self.queries[i]}")
 
 
 class Word:
@@ -131,7 +131,7 @@ class WordsDictionary:
         A dictionary of words, where the key is a term and the values
         are objects of the class Word.
     total_documents : int
-        The total numbers of querys.
+        The total numbers of queries.
     total_words : int
         The total numbers of words.
 
