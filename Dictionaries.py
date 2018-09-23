@@ -1,3 +1,4 @@
+from math import log10
 class QueryDictionary:
     """
     A class used to represent a dictionary of querys.
@@ -6,9 +7,9 @@ class QueryDictionary:
 
     Attributes
     ----------
-    querys : dict()
+    querys : {int : {str : int}}
         A dictionary of querys, where the key is the number of the
-        query and the values are dictionarys containing the words
+        query and the values are dictionaries containing the words
         of the query and its incidences.
     total_querys : int
         The total numbers of querys.
@@ -73,14 +74,14 @@ class Word:
 
     Attributes
     ----------
-    docs : dict()
-        A dictionary of querys, where the key is the number of the
-        query and the values are dictionarys containing the words
-        of the query and its incidences.
-    value : float
-        value of the word correspondig to log(N/n), where N is the
-        total of documents and n is the documents where the word
-        appear.
+    docs : {int : int}
+        A dictionary of documents, where the key is the number of the
+        document and the value is the incidences of the word in that
+        document.
+    idf : float
+        lambda value of the word correspondig to log(N/n), where N is
+        the total of documents and n is the documents where the word
+        appear, it has one argument N.
     length_docs : int
         The total number of documents where the term appears.
 
@@ -93,7 +94,7 @@ class Word:
 
     def __init__(self):
         self.docs = {}
-        self.idf = 0
+        self.idf = lambda N : log10(N/self.length_docs)
         self.length_docs = 0
 
 
@@ -126,10 +127,9 @@ class WordsDictionary:
 
     Attributes
     ----------
-    words : dict()
-        A dictionary of querys, where the key is the number of the
-        query and the values are dictionarys containing the words
-        of the query and its incidences.
+    words : {str : Word}
+        A dictionary of words, where the key is a term and the values
+        are objects of the class Word.
     total_documents : int
         The total numbers of querys.
     total_words : int
