@@ -49,11 +49,12 @@ class VectorSpaceModel:
                     self.relation_coeficient[id_query].append((document, coeficient))
                 else:
                     self.relation_coeficient[id_query] = [(document, coeficient)]
+            self.relation_coeficient[id_query].sort(key = lambda tup : tup[1], reverse = True)
     
     def print_VSM(self):
-        print(list(filter(lambda (x, y) : x == 184, self.relation_coeficient[1])))
-        #for id_query in self.relation_coeficient:
-            #print(f"{id_query} -> {self.relation_coeficient[id_query]}\n")
+        #print(list(filter(lambda x : x[0] == 184, self.relation_coeficient[1])))
+        for id_query, coeficients in self.relation_coeficient.items():
+            print(f"{id_query} -> {coeficients}\n")
 
 
 
