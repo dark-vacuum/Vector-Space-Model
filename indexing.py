@@ -43,10 +43,6 @@ def replace(token: str) -> str:
     return token
 
 
-"""
-Funcion que lee un archivo, y regresa todas las
-palabras que hay en el documento.
-"""
 def read_CranfieldDocs(file: str, words_Dict: WordsDictionary) -> WordsDictionary:
     """
     Receives a word which could be a number or a word or a word
@@ -74,6 +70,7 @@ def read_CranfieldDocs(file: str, words_Dict: WordsDictionary) -> WordsDictionar
         [word: {int: int}]
     describing the word in the document and its frecuency
     """
+
     indicators = {".I", ".T", ".A", ".B", ".W"}
     indicators_toAvoid = {".T", ".A", ".B"}
 
@@ -114,6 +111,7 @@ def read_CranfieldQueries(file: str, queries_Dict: QueryDictionary) -> QueryDict
         [int: {str: int}]
     describing the number of query with its words and its frecuency
     """
+
     indicators = {".I", ".W"}
 
     # Lectura del archivo linea por linea.
@@ -131,7 +129,6 @@ def read_CranfieldQueries(file: str, queries_Dict: QueryDictionary) -> QueryDict
             for word in arr_line:
                 queries_Dict.insertWord(current_query, word)
     return queries_Dict
-
 
 
 def main():
