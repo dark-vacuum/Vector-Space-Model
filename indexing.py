@@ -70,7 +70,9 @@ def read_CranfieldDocs(file: str, words_Dict: WordsDictionary) -> WordsDictionar
 
     Returns
     -------
-
+    Returns a structutre like
+        [word: {int: int}]
+    describing the word in the document and its frecuency
     """
     indicators = {".I", ".T", ".A", ".B", ".W"}
     indicators_toAvoid = {".T", ".A", ".B"}
@@ -95,6 +97,23 @@ def read_CranfieldDocs(file: str, words_Dict: WordsDictionary) -> WordsDictionar
     return words_Dict
 
 def read_CranfieldQueries(file: str, queries_Dict: QueryDictionary) -> QueryDictionary:
+    """
+    Receives a word which is the filename and a QueryDictionary wich
+    has all the queries with words and frecuency
+
+    Attributes
+    ----------
+    file : str
+        Filename of the document with queries to index.
+    queries_Dict : QueryDictionary
+        Dictionary with number query and their words with frecuency.
+
+    Returns
+    -------
+    Returns a structutre like
+        [int: {str: int}]
+    describing the number of query with its words and its frecuency
+    """
     indicators = {".I", ".W"}
 
     # Lectura del archivo linea por linea.
