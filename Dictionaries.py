@@ -59,14 +59,11 @@ class QueryDictionary:
             self.queries[query_num][word] += 1
         else:
             self.queries[query_num][word] = 1
-
-
-    def getQueryId(self) -> [int]:
-        return self.queries.keys
+            
 
     def printDictionary(self):
-        for i in self.queries:
-            print(f"{i}--{self.queries[i]}")
+        for id_query, query in self.queries.items():
+            print(f"{id_query} -- {query}")
 
 
 class Word:
@@ -175,5 +172,5 @@ class WordsDictionary:
 
 
     def printDictionary(self):
-            for i in self.words:
-                print(f"{i}--{self.words[i].docs}")
+            for word, class_word in self.words.items():
+                print(f"{word}--{class_words.docs}")
