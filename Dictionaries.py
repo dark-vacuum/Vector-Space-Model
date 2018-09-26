@@ -61,6 +61,9 @@ class QueryDictionary:
             self.queries[query_num][word] = 1
 
 
+    def getQueryId(self) -> [int]:
+        return self.queries.keys
+
     def printDictionary(self):
         for i in self.queries:
             print(f"{i}--{self.queries[i]}")
@@ -94,7 +97,7 @@ class Word:
 
     def __init__(self):
         self.docs = {}
-        self.idf = lambda N : log10(N/self.length_docs)
+        self.idf = lambda N : int(log10(N/self.length_docs) * 1000)/1000
         self.length_docs = 0
 
 
@@ -130,6 +133,8 @@ class WordsDictionary:
     words : {str : Word}
         A dictionary of words, where the key is a term and the values
         are objects of the class Word.
+    id_documents : {int}
+
     total_documents : int
         The total numbers of queries.
     total_words : int
@@ -144,6 +149,7 @@ class WordsDictionary:
 
     def __init__(self):
         self.words = {}
+        self.id_documents = set()
         self.total_documents = 0
         self.total_words = 0
 
@@ -165,6 +171,8 @@ class WordsDictionary:
             self.words[word] = Word()
             self.total_words += 1
         self.words[word].insertDoc(doc_num)
+        self.id_documents.add(doc_num)
+
 
     def printDictionary(self):
             for i in self.words:

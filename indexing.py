@@ -1,4 +1,5 @@
 from Dictionaries import WordsDictionary, QueryDictionary
+from vectorSpaceModel import VectorSpaceModel
 from functools import reduce
 
 """
@@ -121,9 +122,12 @@ def main():
     words_Dict = WordsDictionary()
     queries_Dict = QueryDictionary()
     words_Dict = read_CranfieldDocs(cranfield_docs, words_Dict)
-    words_Dict.printDictionary()
+    #words_Dict.printDictionary()
     queries_Dict = read_CranfieldQueries(cranfield_queries, queries_Dict)
-    queries_Dict.printDictionary()
+    #queries_Dict.printDictionary()
+    vsm = VectorSpaceModel(words_Dict, queries_Dict)
+    vsm.calculate_Coeficients()
+    vsm.print_VSM()
 
 
 
