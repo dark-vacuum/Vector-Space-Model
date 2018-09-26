@@ -132,6 +132,9 @@ def read_CranfieldQueries(file: str, queries_Dict: QueryDictionary) -> QueryDict
     return queries_Dict
 
 
+def size_words_dicitionary(words_Dict: WordsDictionary):
+    print(words_Dict.total_documents)
+
 
 def main():
     # Colocar aqui los documentos que se quieran leer para crear el indice
@@ -141,8 +144,9 @@ def main():
     queries_Dict = QueryDictionary()
     words_Dict = read_CranfieldDocs(cranfield_docs, words_Dict)
     #words_Dict.printDictionary()
+    size_words_dicitionary(words_Dict)
     queries_Dict = read_CranfieldQueries(cranfield_queries, queries_Dict)
-    queries_Dict.printDictionary()
+    #queries_Dict.printDictionary()
 
 
 
