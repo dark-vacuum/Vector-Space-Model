@@ -1,6 +1,7 @@
 from Dictionaries import WordsDictionary, QueryDictionary
 from vectorSpaceModel import VectorSpaceModel
 from functools import reduce
+from graphing import Graphing
 
 """
     Equipo:
@@ -144,6 +145,8 @@ def main():
     vsm = VectorSpaceModel(words_Dict, queries_Dict)
     vsm.calculate_Coeficients()
     vsm.print_VSM()
+    graph = Graphing(vsm)
+    graph.printGraph()
 
 
 

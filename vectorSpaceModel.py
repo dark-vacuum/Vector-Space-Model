@@ -16,7 +16,7 @@ class VectorSpaceModel:
 
     Methods
     -------
-    
+
     """
 
     def __init__(self, words_Dict, query_Dict):
@@ -50,13 +50,8 @@ class VectorSpaceModel:
                 else:
                     self.relation_coeficient[id_query] = [(document, coeficient)]
             self.relation_coeficient[id_query].sort(key = lambda tup : tup[1], reverse = True)
-    
+
     def print_VSM(self):
         #print(list(filter(lambda x : x[0] == 184, self.relation_coeficient[1])))
         for id_query, coeficients in self.relation_coeficient.items():
             print(f"{id_query} -> {coeficients}\n")
-
-
-
-        
-
