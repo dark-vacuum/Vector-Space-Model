@@ -72,9 +72,10 @@ class Word:
         document and the value is the incidences of the word in that
         document.
     idf : float
-        lambda value of the word correspondig to log(N/n), where N is
-        the total of documents and n is the documents where the word
-        appear, it has one argument N.
+        lambda value of the index document frecuency per term 
+        correspondig to log(N/df), where N is the total number of 
+        documents and df is the total number of documents where the 
+        term appears, it has one argument, N.
     length_docs : int
         The total number of documents where the term appears.
 
