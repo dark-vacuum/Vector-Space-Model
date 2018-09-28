@@ -1,4 +1,5 @@
 from math import log10
+
 class QueryDictionary:
     """
     A class used to represent a dictionary of queries.
@@ -16,50 +17,42 @@ class QueryDictionary:
 
     Methods
     -------
-    insertQuery(query_num: int)
-        Inserts the query in the dicctionary if the query doesn't
-        exists.
-    insertWord(query_num: int, word: str)
-        Inserts a word or adds an incidence.
+    createIfNotExists(word: str, query_num: int)
+        Inserts the query and the words in the dicctionary if they
+        doesn't exists.
     """
 
     def __init__(self):
         self.queries = {}
         self.total_queries = 0
+    
 
-    def insertQuery(self, query_num:  int):
+    def createIfNotExists(self, word: str, query_num: int):
         """
-        Checks if the query exist in the dictionary, if not exists is
-        created.
+        Checks if the word exist in the query and if the query exists,
+        if not exists is created, else the incidence increments in 1.
 
         Parameters
         ----------
+        word : str
+            The word to be inserted.
         query_num : int
             The number of the query to check.
         """
 
-        already_exists = query_num in self.queries
-        if not already_exists:
+        query_already_exists = query_num in self.queries
+
+        if not query_already_exists:
             self.queries[query_num] = {}
             self.total_queries += 1
+        
+        word_already_exists = word in self.queries[query_num]
 
-    def insertWord(self, query_num: int, word: str):
-        """
-        Checks if the word exist in the query, if not exists is
-        created, else the incidence increments in 1.
-
-        Parameters
-        ----------
-        query_num : int
-            The number of the query to check.
-        """
-
-        already_exists = word in self.queries[query_num]
-        if already_exists:
+        if word_already_exists:
             self.queries[query_num][word] += 1
         else:
             self.queries[query_num][word] = 1
-            
+
 
     def printDictionary(self):
         for id_query, query in self.queries.items():
@@ -131,7 +124,7 @@ class WordsDictionary:
         A dictionary of words, where the key is a term and the values
         are objects of the class Word.
     id_documents : {int}
-
+        Set of documents id's.
     total_documents : int
         The total numbers of queries.
     total_words : int
@@ -173,4 +166,4 @@ class WordsDictionary:
 
     def printDictionary(self):
             for word, class_word in self.words.items():
-                print(f"{word}--{class_words.docs}")
+                print(f"{word}--{class_word.docs}")
