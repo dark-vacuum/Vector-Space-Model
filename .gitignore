@@ -1,8 +1,4 @@
 .DS_Store
 __pycache__/*
 cran/*
-cran.3
-cran.all.1400
-cran.qry
-cranqrel
-cranqrel.readme
+cran*
