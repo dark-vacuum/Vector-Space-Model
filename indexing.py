@@ -1,5 +1,6 @@
 from Dictionaries import WordsDictionary, QueryDictionary
 from vectorSpaceModel import VectorSpaceModel
+from presitionRecall import PresitionRecall
 from functools import reduce
 from graphing import Graphing
 
@@ -132,21 +133,50 @@ def read_CranfieldQueries(file: str, queries_Dict: QueryDictionary) -> QueryDict
     return queries_Dict
 
 
+
+
+
+
+def read_CranfieldRelevances(file: str, relevances_Dict: PresitionRecall) -> PresitionRecall:
+    # Lectura del archivo linea por linea.
+    with open(file) as document:
+        current_query = 0
+        for line in document:
+            arr_line = line.split()
+            #print(arr_line)
+            relevances_Dict.insertQuery(int(arr_line[0]))
+            arr_line = list(filter(lambda x : x != "", map(lambda x : replace(x), arr_line)))
+
+            for word in arr_line[1:-1]:
+                number = int(word)
+                relevances_Dict.insertWord(int(arr_line[0]), number)
+
+    return relevances_Dict
+
+
+
+
+
+
 def main():
     # Colocar aqui los documentos que se quieran leer para crear el indice
     cranfield_docs = "cran.all.1400"
     cranfield_queries = "cran.qry"
+    cranfield_qrels = "cranqrel"
     words_Dict = WordsDictionary()
     queries_Dict = QueryDictionary()
+    relevances_Dict = PresitionRecall()
     words_Dict = read_CranfieldDocs(cranfield_docs, words_Dict)
     #words_Dict.printDictionary()
     queries_Dict = read_CranfieldQueries(cranfield_queries, queries_Dict)
+    relevances_Dict = read_CranfieldRelevances(cranfield_qrels, relevances_Dict)
+    relevances_Dict.printDictionary()
     #queries_Dict.printDictionary()
-    vsm = VectorSpaceModel(words_Dict, queries_Dict)
-    vsm.calculate_Coeficients()
-    vsm.print_VSM()
-    graph = Graphing(vsm)
-    graph.printGraph()
+    #vsm = VectorSpaceModel(words_Dict, queries_Dict)
+    #vsm.calculate_Coeficients()
+    #vsm.print_VSM()
+    #graph = Graphing(vsm)
+    #graph.printGraph()
 
 
 
