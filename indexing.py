@@ -43,11 +43,11 @@ def replace(token: str) -> str:
     return token
 
 
-def read_CranfieldDocs(file: str, words_Dict: WordsDictionary) -> WordsDictionary:
+def read_CranfieldCollection(file: str, dictionary):
     """
-    Receives a word which could be a number or a word or a word
-    with symbols and if the string has any af the specified
-    symbols they will be removed.
+    Receives a file of the Cranfield Collection, it could be the
+    documents or the queries, reads the file and stores the information
+    in 'dictionary'.
 
     Attributes
     ----------
@@ -61,14 +61,13 @@ def read_CranfieldDocs(file: str, words_Dict: WordsDictionary) -> WordsDictionar
     file : str
         The path or the name of the documents of the Cranfield
         Collection.
-    words_Dict : WordsDictionary
+    dictionary : WordsDictionary or QueryDictionary
         The dictionary where the words will be stored.
 
     Returns
     -------
-    Returns a structutre like
-        [word: {int: int}]
-    describing the word in the document and its frecuency
+    Returns a class WordsDictionary or QueryDictionary, depending on
+    the input.
     """
 
     indicators = {".I", ".T", ".A", ".B", ".W"}
@@ -83,17 +82,18 @@ def read_CranfieldDocs(file: str, words_Dict: WordsDictionary) -> WordsDictionar
             if arr_line[0] in indicators:
                 if arr_line[0] == ".I":
                     current_doc = int(arr_line[1])
-                    words_Dict.total_documents += 1
+                    if type(dictionary) == WordsDictionary:
+                        dictionary.total_documents += 1
                 avoid_line = True if arr_line[0] in indicators_toAvoid else False
                 continue
             if avoid_line:
                 continue
             arr_line = list(filter(lambda x : x != "", map(lambda x : replace(x), arr_line)))
             for word in arr_line:
-                words_Dict.createIfNotExists(word, current_doc)
-    return words_Dict
+                dictionary.createIfNotExists(word, current_doc)
+    return dictionary
 
-def read_CranfieldQueries(file: str, queries_Dict: QueryDictionary) -> QueryDictionary:
+def read_CranfieldQRelation(file: str, queries_Dict):
     """
     Receives a word which is the filename and a QueryDictionary wich
     has all the queries with words and frecuency
@@ -132,18 +132,23 @@ def read_CranfieldQueries(file: str, queries_Dict: QueryDictionary) -> QueryDict
 
 
 def main():
-    # Colocar aqui los documentos que se quieran leer para crear el indice
+    # Name of files to read
     cranfield_docs = "cran.all.1400"
     cranfield_queries = "cran.qry"
+
     words_Dict = WordsDictionary()
     queries_Dict = QueryDictionary()
-    words_Dict = read_CranfieldDocs(cranfield_docs, words_Dict)
-    #words_Dict.printDictionary()
-    queries_Dict = read_CranfieldQueries(cranfield_queries, queries_Dict)
-    #queries_Dict.printDictionary()
+
+    words_Dict = read_CranfieldCollection(cranfield_docs, words_Dict)
+    queries_Dict = read_CranfieldCollection(cranfield_queries, queries_Dict)
+    
+    # Vector Space Model
     vsm = VectorSpaceModel(words_Dict, queries_Dict)
+    # Calculates the similarity coeficients, sorts them and print the
+    # VSM with a limit of coeficients
     vsm.calculate_Coeficients()
-    vsm.print_VSM()
+    vsm.sort_Coeficients()
+    vsm.print_VSM(10)
 
 
 
