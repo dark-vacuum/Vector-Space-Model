@@ -1,6 +1,8 @@
 from Dictionaries import WordsDictionary, QueryDictionary
 from vectorSpaceModel import VectorSpaceModel
+from presitionRecall import PresitionRecall
 from functools import reduce
+from graphing import Graphing
 
 """
     Equipo:
@@ -93,62 +95,69 @@ def read_CranfieldCollection(file: str, dictionary):
                 dictionary.createIfNotExists(word, current_doc)
     return dictionary
 
-def read_CranfieldQRelation(file: str, queries_Dict):
-    """
-    Receives a word which is the filename and a QueryDictionary wich
-    has all the queries with words and frecuency
 
-    Attributes
+def read_CranfieldRelevances(file: str, relevances_Dict: PresitionRecall) -> PresitionRecall:
+    """
+    Reads the cranfield relevances of the docuement.
+
+    Parameters
     ----------
     file : str
-        Filename of the document with queries to index.
-    queries_Dict : QueryDictionary
-        Dictionary with number query and their words with frecuency.
+        Filename of the document with relevance relations.
+    relevances_Dict : PresitionRecall
+        .
 
     Returns
     -------
-    Returns a structutre like
-        [int: {str: int}]
-    describing the number of query with its words and its frecuency
+    Returns
     """
-
-    indicators = {".I", ".W"}
 
     # Lectura del archivo linea por linea.
     with open(file) as document:
         current_query = 0
         for line in document:
             arr_line = line.split()
-            if arr_line[0] in indicators:
-                if arr_line[0] == ".I":
-                    current_query = int(arr_line[1])
-                    queries_Dict.total_queries += 1
-                    queries_Dict.insertQuery(current_query)
-                continue
+            #print(arr_line)
+            relevances_Dict.insertQuery(int(arr_line[0]))
             arr_line = list(filter(lambda x : x != "", map(lambda x : replace(x), arr_line)))
-            for word in arr_line:
-                queries_Dict.insertWord(current_query, word)
-    return queries_Dict
+
+            for word in arr_line[1:-1]:
+                number = int(word)
+                relevances_Dict.insertWord(int(arr_line[0]), number)
+
+    return relevances_Dict
+
+
+
+
 
 
 def main():
     # Name of files to read
     cranfield_docs = "cran.all.1400"
     cranfield_queries = "cran.qry"
+    cranfield_qrels = "cranqrel"
 
     words_Dict = WordsDictionary()
     queries_Dict = QueryDictionary()
+    relevances_Dict = PresitionRecall()
 
     words_Dict = read_CranfieldCollection(cranfield_docs, words_Dict)
     queries_Dict = read_CranfieldCollection(cranfield_queries, queries_Dict)
+    relevances_Dict = read_CranfieldRelevances(cranfield_qrels, relevances_Dict)
     
     # Vector Space Model
-    vsm = VectorSpaceModel(words_Dict, queries_Dict)
-    # Calculates the similarity coeficients, sorts them and print the
+    #vsm = VectorSpaceModel(words_Dict, queries_Dict)
+    # Calculates the similarity coeficients, sorts them and print them
     # VSM with a limit of coeficients
-    vsm.calculate_Coeficients()
-    vsm.sort_Coeficients()
-    vsm.print_VSM(10)
+    #vsm.calculate_Coeficients()
+    #vsm.sort_Coeficients()
+    #vsm.print_VSM(10)
+    
+    
+    relevances_Dict.printDictionary()
+    #graph = Graphing(vsm)
+    #graph.printGraph()
 
 
 
