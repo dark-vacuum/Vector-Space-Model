@@ -1,6 +1,5 @@
-from Dictionaries import WordsDictionary, QueryDictionary
+from Dictionaries import WordsDictionary, QueryDictionary, RelevancesDictionary, PresitionRecallDictionary
 from vectorSpaceModel import VectorSpaceModel
-from presitionRecall import PresitionRecall
 from functools import reduce
 from graphing import Graphing
 
@@ -96,7 +95,7 @@ def read_CranfieldCollection(file: str, dictionary):
     return dictionary
 
 
-def read_CranfieldRelevances(file: str, relevances_Dict: PresitionRecall) -> PresitionRecall:
+def read_CranfieldRelevances(file: str, relevances_Dict: RelevancesDictionary) -> RelevancesDictionary:
     """
     Reads the cranfield relevances of the docuement.
 
@@ -128,6 +127,9 @@ def read_CranfieldRelevances(file: str, relevances_Dict: PresitionRecall) -> Pre
     return relevances_Dict
 
 
+def retrieveDocuments(words_Dict: WordsDictionary, queries_Dict: QueryDictionary, relevances_Dict: RelevancesDictionary) -> PresitionRecallDictionary:
+    #Complete code here to retrieve the documents for a query
+    int = 0
 
 
 
@@ -140,14 +142,14 @@ def main():
 
     words_Dict = WordsDictionary()
     queries_Dict = QueryDictionary()
-    relevances_Dict = PresitionRecall()
+    relevances_Dict = RelevancesDictionary()
 
     words_Dict = read_CranfieldCollection(cranfield_docs, words_Dict)
     queries_Dict = read_CranfieldCollection(cranfield_queries, queries_Dict)
     relevances_Dict = read_CranfieldRelevances(cranfield_qrels, relevances_Dict)
     
     # Vector Space Model
-    #vsm = VectorSpaceModel(words_Dict, queries_Dict)
+    vsm = VectorSpaceModel(words_Dict, queries_Dict)
     # Calculates the similarity coeficients, sorts them and print them
     # VSM with a limit of coeficients
     #vsm.calculate_Coeficients()
