@@ -123,11 +123,6 @@ def read_CranfieldRelevances(file: str, relevances_Dict: RelevancesDictionary) -
     return relevances_Dict
 
 
-def retrieveDocuments(words_Dict: WordsDictionary, queries_Dict: QueryDictionary, relevances_Dict: RelevancesDictionary) -> PresitionRecallDictionary:
-    #Complete code here to retrieve the documents for a query
-    int = 0
-
-
 
 
 def main():
@@ -151,6 +146,7 @@ def main():
     vsm.calculate_Coeficients()
     vsm.sort_Coeficients()
     
+<<<<<<< HEAD
     for id_query, ranking in vsm.get_Ranking(10, 10):
        print(f"{id_query} --> {ranking}")
 
@@ -160,9 +156,14 @@ def main():
     
 
     
+=======
+    print("Ranking de las queries: ")
+    for id_query, ranking in vsm.get_Ranking(10, 100):
+        print(f"{id_query} --> {ranking}")
+>>>>>>> a06f69aad6388e9b19683ee046519eac0731f35d
     
     
-    #relevances_Dict.printDictionary()
+    relevances_Dict.printDictionary()
     #graph = Graphing(vsm)
     #graph.printGraph()
 
