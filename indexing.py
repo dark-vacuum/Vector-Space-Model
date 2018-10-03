@@ -1,5 +1,6 @@
 from Dictionaries import WordsDictionary, QueryDictionary, RelevancesDictionary, PresitionRecallDictionary
 from vectorSpaceModel import VectorSpaceModel
+from presitionRecall import PresitionRecall
 from functools import reduce
 from graphing import Graphing
 
@@ -151,7 +152,14 @@ def main():
     vsm.sort_Coeficients()
     
     for id_query, ranking in vsm.get_Ranking(10, 10):
-        print(f"{id_query} --> {ranking}")
+       print(f"{id_query} --> {ranking}")
+
+
+    presition_recall = PresitionRecall(relevances_Dict.qrels, vsm.get_Ranking(10, 10))
+    presition_recall.calculate_presition()
+    
+
+    
     
     
     #relevances_Dict.printDictionary()
