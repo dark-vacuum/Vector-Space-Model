@@ -6,6 +6,7 @@ class PresitionRecall:
         self.presition_recall_data = []
 
     def calculate_presition(self):
+        presition_recall = []
         for query in range(1, len(self.rankings)+1):
             relevant = self.relevance_dict[query]
             retrieved = set()
