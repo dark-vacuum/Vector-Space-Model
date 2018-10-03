@@ -113,16 +113,11 @@ def read_CranfieldRelevances(file: str, relevances_Dict: RelevancesDictionary) -
 
     # Lectura del archivo linea por linea.
     with open(file) as document:
-        current_query = 0
         for line in document:
             arr_line = line.split()
-            #print(arr_line)
-            relevances_Dict.insertQuery(int(arr_line[0]))
-            arr_line = list(filter(lambda x : x != "", map(lambda x : replace(x), arr_line)))
-
-            for word in arr_line[1:-1]:
-                number = int(word)
-                relevances_Dict.insertWord(int(arr_line[0]), number)
+            query = int(arr_line[0])
+            number = int(arr_line[1])
+            relevances_Dict.insertDoc(query, number)
 
     return relevances_Dict
 
@@ -152,12 +147,14 @@ def main():
     vsm = VectorSpaceModel(words_Dict, queries_Dict)
     # Calculates the similarity coeficients, sorts them and print them
     # VSM with a limit of coeficients
-    #vsm.calculate_Coeficients()
-    #vsm.sort_Coeficients()
-    #vsm.print_VSM(10)
+    vsm.calculate_Coeficients()
+    vsm.sort_Coeficients()
+    
+    for id_query, ranking in vsm.get_Ranking(10, 10):
+        print(f"{id_query} --> {ranking}")
     
     
-    relevances_Dict.printDictionary()
+    #relevances_Dict.printDictionary()
     #graph = Graphing(vsm)
     #graph.printGraph()
 
