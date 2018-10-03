@@ -77,9 +77,9 @@ class VectorSpaceModel:
         for coeficients in self.similarity_coeficient.values():
             coeficients.sort(key = lambda tup : tup[1], reverse = True)
 
-    def print_VSM(self, limit:  int):
+    def get_Ranking(self, queries_limit:  int, docs_limit: int):
         """
-        Prints the Vector Space Model with the a limit of coeficients.
+        with the a limit of coeficients.
 
         Parameters
         ----------
@@ -87,7 +87,10 @@ class VectorSpaceModel:
             Number of coeficients to show for each document.
         """
 
+        lambda_function = lambda x:  (x[0], {doc_num for doc_num, _ in x[1][:docs_limit]})
+
+        return list(map(lambda_function, list(self.similarity_coeficient.items())[:queries_limit]))
         #print(list(filter(lambda x : x[0] == 184, self.relation_coeficient[1])))
-        for id_query, coeficients in self.similarity_coeficient.items():
-            print(f"{id_query} -> {coeficients[:limit]}\n")
+        #for id_query, coeficients in self.similarity_coeficient.items():
+        #    print(f"{id_query} -> {coeficients[:limit]}\n")
 
