@@ -192,9 +192,19 @@ class RelevancesDictionary:
         self.qrels[query_num].add(relDoc)
     
     def printDictionary(self):
+        print("Relevances dictionary: ")
         for id_query, docs in self.qrels.items():
             print(f"{id_query} --> {docs}")
-
+    
+    def printDictionaryRange(self, lowerLimit: int, upperLimit: int):
+        print("Relevances dictionary: ")
+        relevants = {}
+        for i in range (lowerLimit, upperLimit):
+            doc = self.qrels[i]
+            relevants[i] = doc
+            #print(f"{i} --> {doc}")
+        print(relevants)
+        return relevants
 
 class PresitionRecallDictionary:
     '''
