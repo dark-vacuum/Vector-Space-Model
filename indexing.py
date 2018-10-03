@@ -1,4 +1,4 @@
-from Dictionaries import WordsDictionary, QueryDictionary, RelevancesDictionary, PresitionRecallDictionary
+from Dictionaries import WordsDictionary, QueryDictionary, RelevancesDictionary
 from vectorSpaceModel import VectorSpaceModel
 from presitionRecall import PresitionRecall
 from functools import reduce
@@ -123,8 +123,6 @@ def read_CranfieldRelevances(file: str, relevances_Dict: RelevancesDictionary) -
     return relevances_Dict
 
 
-
-
 def main():
     # Name of files to read
     cranfield_docs = "cran.all.1400"
@@ -150,21 +148,13 @@ def main():
     #   print(f"{id_query} --> {ranking}")
 
 
-    presition_recall = PresitionRecall(relevances_Dict.qrels, vsm.get_Ranking(10, 10))
+    presition_recall = PresitionRecall(relevances_Dict.qrels, vsm.get_Ranking(10, 20))
     presition_recall.calculate_presition()
     presition_recall.calculate_Average()
-    for i in presition_recall.get_PresitionRecallData():
-        print(i)
+    values = presition_recall.get_PresitionRecallData()
+    for i in values:
+        graph = Graphing(i, values.index(i))
+        graph.printGraph()
     
-
-    
-    
-    
-    #relevances_Dict.printDictionary()
-    #graph = Graphing(vsm)
-    #graph.printGraph()
-
-
-
 if __name__ == '__main__':
     main()

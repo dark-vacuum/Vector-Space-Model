@@ -112,7 +112,6 @@ class Word:
             self.length_docs += 1
 
 
-
 class WordsDictionary:
     """
     A class used to represent a dictionary of words.
@@ -206,8 +205,3 @@ class RelevancesDictionary:
         print(relevants)
         return relevants
 
-class PresitionRecallDictionary:
-    '''
-        A class to implement the next structure:
-        {query -> {relevant_docs: RelevancesDict}, {retrieved_docs: algo que regrese}}
-    '''
