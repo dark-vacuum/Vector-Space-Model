@@ -146,26 +146,23 @@ def main():
     vsm.calculate_Coeficients()
     vsm.sort_Coeficients()
     
-<<<<<<< HEAD
     for id_query, ranking in vsm.get_Ranking(10, 10):
        print(f"{id_query} --> {ranking}")
 
 
     presition_recall = PresitionRecall(relevances_Dict.qrels, vsm.get_Ranking(10, 10))
-    presition_recall.calculate_presition()
+    pres_rec = presition_recall.calculate_presition()
     
 
     
-=======
-    print("Ranking de las queries: ")
-    for id_query, ranking in vsm.get_Ranking(10, 100):
-        print(f"{id_query} --> {ranking}")
->>>>>>> a06f69aad6388e9b19683ee046519eac0731f35d
+    #print("Ranking de las queries: ")
+    #for id_query, ranking in vsm.get_Ranking(10, 100):
+        #print(f"{id_query} --> {ranking}")
     
     
-    relevances_Dict.printDictionary()
-    #graph = Graphing(vsm)
-    #graph.printGraph()
+    #relevances_Dict.printDictionary()
+    graph = Graphing(pres_rec)
+    graph.printGraph()
 
 
 

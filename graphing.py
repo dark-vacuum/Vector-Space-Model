@@ -2,8 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #<<<<<<< HEAD
-data = [(0,5),(10,8.8),(20,1.4),(30,8),(40,18),(50,8.8), (60,10), (70,10), (80,30), (90,40), (100,60)]
-data.sort()
 #=======
 class Graphing:
 #>>>>>>> e3284bf981624e3f57b9eaadd26fbc3907213c4d
@@ -40,9 +38,22 @@ plt.show()
     plt.ylabel('Eje de las y')
     plt.show()
     '''
-    def __init__(self, vsm):
-        self.data = vsm
+    def __init__(self, data):
+        self.data = data
 
     def printGraph(self):
-        print("HOLa papu")
+        size = len(self.data)
+        x = np.zeros(size)
+        y = np.zeros(size)
+        q = np.zeros(size)
+        for i in range(size):
+            print(self.data[i])
+            (q[i], x[i], y[i]) = self.data[i]
+
+        
+            plt.plot(x, y)
+            plt.title('Presition & Recall graph')
+            plt.xlabel('Recall')
+            plt.ylabel('Presition')
+            plt.show()
 #>>>>>>> e3284bf981624e3f57b9eaadd26fbc3907213c4d
